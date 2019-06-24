@@ -43,7 +43,7 @@ class App extends Component {
                                 <Route exact path="/registerStudent" component={RegisterStudent}/>
                     <Route exact path="/registerStudent" component={RegisterStudent}/>
                     <Route exact path="/lecturerHome" component={LecturerHome}/>
-                    <Route exact path="/lecturerHome" component={LecturerHome}/>
+                    <Route exact path="/lecturerHome" component={Test}/>
 
                     <Route exact path="/lecturerHome" component={LecturerHome}/>
                     <Route exact path="/lecturerProfile" component={LecturerProfile}/>
