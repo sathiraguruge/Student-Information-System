@@ -19,7 +19,8 @@ var StudentController = function () {
                         DoB: data.DoB,
                         NIC: data.NIC,
                         Faculty: data.Faculty,
-                        Gender: data.Gender
+                        Gender: data.Gender,
+                        ImageURL: null
                     });
 
                     // for( i = 0 ; i < data.course.length ; ++i){

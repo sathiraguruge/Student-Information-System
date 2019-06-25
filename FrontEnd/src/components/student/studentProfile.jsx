@@ -8,6 +8,9 @@ import Modal from "react-awesome-modal";
 import AdminRegistrationValidation from "../../validations/admin/registration";
 import {Button} from "react-bootstrap";
 import Ripples from "react-ripples";
+import {storage} from '../../firebase/firebaseConfig';
+import {Progress} from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 export default class LecturerProfile extends Component {
     constructor(props) {
@@ -22,7 +25,12 @@ export default class LecturerProfile extends Component {
             faculty: '',
             gender: '',
             userName: '',
-            visibleModal: false
+            visibleModal: false,
+            visibleProfileModal: false,
+            image: null,
+            url: '',
+            progress: 0,
+            barVisibleFlag: true
         };
         this.userService = new UserService();
         this.SISService = new SISService();
@@ -32,6 +40,8 @@ export default class LecturerProfile extends Component {
         this.loadUserDetails(username);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSubmitPassword = this.onSubmitPassword.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
     }
 
     openModal() {
@@ -40,11 +50,56 @@ export default class LecturerProfile extends Component {
         });
     }
 
-    closeModal() {
+    openProfileModal() {
         this.setState({
-            visibleModal: false
+            visibleProfileModal: true
         });
     }
+
+    closeModal() {
+        this.setState({
+            visibleModal: false,
+            visibleProfileModal: false
+        });
+    }
+
+    handleChange(e) {
+        if (e.target.files[0]) {
+            const image = e.target.files[0];
+            this.setState(() => ({image}));
+        }
+    };
+
+    handleUpload(e) {
+        const {image} = this.state;
+        const uploadTask = storage.ref(`images/${this.userService.username}/${image.name}`).put(image);
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                this.setState({progress});
+                this.setState({
+                    barVisibleFlag: true
+                })
+            },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                storage.ref(`images/${this.userService.username}`).child(image.name).getDownloadURL().then(url => {
+                    console.log(url);
+                    this.setState({url});
+                }).then( url => {
+                    this.SISService.modifyStudent(this.state.userName, {
+                        ImageURL: this.state.url
+                    }).then(response => {
+                        console.log(response);
+                        alert('Your Profile has been Successfully Updated');
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                })
+            });
+    };
 
     onChange(e) {
         this.setState({
@@ -73,7 +128,8 @@ export default class LecturerProfile extends Component {
                 nic: response.data.NIC,
                 faculty: response.data.Faculty,
                 gender: response.data.Gender,
-                userName: response.data.SID
+                userName: response.data.SID,
+                url : response.data.ImageURL
             });
         }).catch(error => {
             console.log(error)
@@ -121,6 +177,18 @@ export default class LecturerProfile extends Component {
                 <div className="container p-2" style={{paddingBottom: '500px'}}>
                     <form onSubmit={this.onSubmit}>
                         <QueueAnim duration="1000" interval="400">
+                            <div key="11" className="col-lg mt-3" style={{marginLeft: "500px"}}>
+                                <Ripples>
+                                    <img
+                                        src={this.state.url || 'http://vlabs.iitb.ac.in/vlabs-dev/labs_local/machine_learning/labs/exp11/images/no_img.png'}
+                                        alt="Uploaded images" height="300"
+                                        width="400"/><br/>
+                                </Ripples>
+                            </div>
+                            <Button className="btn btn-info" style={{marginLeft: "660px"}}
+                                    onClick={() => this.openProfileModal()}>Change <i
+                                className="fa fa-user-circle"/></Button>
+
                             <div key="1" className="wrap-input100 validate-input" data-validate="Name is required">
                                 <span className="label-input100">First Name : </span>
                                 <input className="input100" type="text" required={true} value={this.state.firstName}
@@ -245,6 +313,32 @@ export default class LecturerProfile extends Component {
                                 <input type="submit" className="btn btn-info btn-block" value="Change Password"/>
                             </div>
                         </form>
+                    </div>
+                </Modal>
+
+
+                <Modal visible={this.state.visibleProfileModal} width="1000" height="600" effect="fadeInRight"
+                       onClickAway={() => this.closeModal()}>
+                    <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
+                       style={{marginLeft: "980px"}}/>
+                    <div className="container p-2" style={{marginLeft: "300px"}}>
+                        <img
+                            src={this.state.url || 'http://vlabs.iitb.ac.in/vlabs-dev/labs_local/machine_learning/labs/exp11/images/no_img.png'}
+                            alt="Uploaded images" height="300"
+                            width="400"/><br/>
+                        <input type="file" onChange={this.handleChange} className="btn btn-info"
+                               style={{marginLeft: "30px"}}/>
+                        <br/><br/>
+                        {this.state.barVisibleFlag ?
+                            <div style={{width: "100px", marginLeft: "150px", marginBottom: "10px"}}><Progress
+                                type="circle" percent={this.state.progress}
+                                status="success" width={100} strokeWidth={10}
+                            /></div> : null}
+
+                        <Ripples>
+                            <Button className="btn btn-info" style={{width: "100px", marginLeft: "150px"}}
+                                    onClick={this.handleUpload}>Upload <i className="fa fa-key"/></Button>
+                        </Ripples>
                     </div>
                 </Modal>
 
