@@ -58,3 +58,20 @@ div.absolute {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.profilePicture{
+	border-radius: 60%;
+}
+
+.profileImageContainer {
+	position: relative;
+	text-align: center;
+	color: white;
+}
+
+.profileCenteredImageText {
+	position: absolute;
+	top: 90%;
+	left: 80%;
+	transform: translate(-50%, -50%);
+}
