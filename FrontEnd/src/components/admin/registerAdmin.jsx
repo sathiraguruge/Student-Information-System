@@ -42,16 +42,12 @@ export default class RegisterAdminContainer extends Component {
         let myAdminRegistrationValidation = new AdminRegistrationValidation(this.state.Username, this.state.Password, this.state.ConfirmPassword);
         if (myAdminRegistrationValidation.validate) {
             this.SISService.addAdmin({
-                'userName': this.state.Username,
-                'password': this.state.Password,
-                'email': this.state.Email
+                'Username': this.state.Username,
+                'Password': this.state.Password,
+                'Email': this.state.Email
             }).then(response => {
                 alert(response.data.message);
-                if (response.data.status === "200") {
-                    let myEmailService = new EmailService();
-                    myEmailService.sendEmailToAdmin(this.state.Email, this.state.Username);
-                    window.location.href = "/manageAdmin";
-                }
+                window.location.href = "/manageAdmin"
             });
         }
     }

@@ -14,8 +14,8 @@ class OneAdminMember extends Component {
     }
 
     delete() {
-        this.SISService.deleteAdminMember(this.props.obj.userName).then(response => {
-            alert(response.data);
+        this.SISService.deleteAdminMember(this.props.obj.Username).then(response => {
+            alert(response.data.message);
             window.location.reload();
         }).catch(err => {
             console.log(err)
@@ -25,8 +25,8 @@ class OneAdminMember extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.obj.userName}</td>
-                <td>{this.props.obj.email}</td>
+                <td>{this.props.obj.Username}</td>
+                <td>{this.props.obj.Email}</td>
                 <td>
                     <button onClick={this.delete} className="btn btn-danger">Delete  <i className="fa fa-trash"/></button>
                 </td>

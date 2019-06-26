@@ -93,7 +93,7 @@ export default class SISService {
     //-------------------------------------------------------Admin Functions ----------------------------------------------------------------------------
     addAdmin(data){
         return new Promise((resolve, reject) => {
-            this.apiService.post('/admins/', data, "SpringBoot").then(response => {
+            this.apiService.post('/admin/', data, "Node").then(response => {
                 resolve(response);
             }).catch(error => {
                 reject(error)
@@ -104,7 +104,7 @@ export default class SISService {
 
     getAdminList() {
         return new Promise((resolve, reject) => {
-            this.apiService.get('/admins/', "SpringBoot").then(response => {
+            this.apiService.get('/admin/', "Node").then(response => {
                 resolve(response)
             }).catch(err => {
                 reject(err)
@@ -114,7 +114,7 @@ export default class SISService {
 
     deleteAdminMember(username) {
         return new Promise((resolve, reject) => {
-            this.apiService.delete('/admins/' + username, "SpringBoot").then(response => {
+            this.apiService.delete('/admin/' + username, "Node").then(response => {
                 resolve(response)
             }).catch(err => {
                 reject(err)
