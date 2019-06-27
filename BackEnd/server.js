@@ -14,6 +14,8 @@ const Student = require('./routing/StudentRouting');
 const ExamRouter = require('./routing/ExamRouting');
 const AssignmentRouter = require('./routing/AssignmentRouting');
 const CosEnrollRouter = require('./routing/CosEnrollRouting');
+const AdminRouter = require('./routing/AdminRouting')
+const port = process.env.PORT || 3000
 //Import DatabaseConfigurations
 const databaseConfig = require('./configuration/config');
 
@@ -30,6 +32,7 @@ app.use('/api/student', Student);
 app.use('/register/student', Student);
 app.use('/api/exam', ExamRouter);
 app.use('/api/assignment', AssignmentRouter);
+app.use('/api/admin', AdminRouter);
 app.use('/api/cosenroll', CosEnrollRouter);
 
 
@@ -39,7 +42,7 @@ app.use('/login', Login);
 
 
 //Server Connection
-app.listen(databaseConfig.app.port, err => {
+app.listen(port, err => {
     if (err) {
         console.error(err);
         return;

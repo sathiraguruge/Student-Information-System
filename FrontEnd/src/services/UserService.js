@@ -31,7 +31,7 @@ export default class UserService {
     }
 
     get isLoggedIn() {
-        return (localStorage.getItem('LoggedInStatus') === 'true') ? true : false;
+        return (localStorage.getItem('LoggedInStatus') === 'true');
     }
 
     get username() {

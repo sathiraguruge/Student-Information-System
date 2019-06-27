@@ -1,6 +1,4 @@
 const ExamModel = require('../models/CosEnroll');
-// const md5 = require('md5');
-// const MailService = require('../services/MailService');
 
 const CosEnrolllController = function () {
     this.insert = (data) => {

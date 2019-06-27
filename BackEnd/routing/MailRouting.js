@@ -3,9 +3,9 @@ const router = express.Router();
 const MailService = require('../services/MailService');
 
 router.post('/', (req, res) => {
-    MailService.sendMail(req.body.recepient, req.body.recepientName, req.body.subject, req.body.messageType, req.body).then( data => {
+    MailService.sendMail(req.body.recepient, req.body.recepientName, req.body.subject, req.body.messageType, req.body).then(data => {
         res.json(data)
-    }).catch( err => {
+    }).catch(err => {
         res.json(err);
     });
 });

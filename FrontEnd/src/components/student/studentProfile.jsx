@@ -25,6 +25,8 @@ export default class LecturerProfile extends Component {
             faculty: '',
             gender: '',
             userName: '',
+            oldPassword: '',
+            newPassword1: '',
             visibleModal: false,
             visibleProfileModal: false,
             image: null,
@@ -42,6 +44,7 @@ export default class LecturerProfile extends Component {
         this.onSubmitPassword = this.onSubmitPassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
+        this.renderChangePasswordModal = this.renderChangePasswordModal.bind(this);
     }
 
     openModal() {
@@ -73,7 +76,7 @@ export default class LecturerProfile extends Component {
     handleUpload(e) {
         const {image} = this.state;
         if (image !== null) {
-            const uploadTask = storage.ref(`images/${this.userService.username}/${image.name}`).put(image);
+            const uploadTask = storage.ref(`images/Student/${this.userService.username}/${image.name}`).put(image);
             if (uploadTask !== null) {
                 uploadTask.on('state_changed',
                     (snapshot) => {
@@ -91,7 +94,6 @@ export default class LecturerProfile extends Component {
                             console.log(url);
                             this.setState({url});
                         }).then(url => {
-                            console.log(url)
                             this.SISService.modifyStudent(this.state.userName, {
                                 ImageURL: this.state.url
                             }).then(response => {
@@ -177,6 +179,75 @@ export default class LecturerProfile extends Component {
         }
     }
 
+    renderChangePasswordModal(e) {
+        return (
+            <Modal visible={this.state.visibleModal} width="1000" height="400" effect="fadeInRight"
+                   onClickAway={() => this.closeModal()}>
+                <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
+                   style={{marginLeft: "980px"}}/>
+                <div className="container p-2" style={{marginBottom: '500px', paddingBottom: '500px'}}>
+                    <form onSubmit={this.onSubmitPassword}>
+                        <div className="wrap-input100 validate-input" data-validate="Name is required">
+                            <span className="label-input100">Old Password : </span>
+                            <input className="input100" type="password" required={true}
+                                   value={this.state.oldPassword}
+                                   onChange={this.onChange} name="oldPassword"/>
+                            <span className="focus-input100"/>
+                        </div>
+
+                        <div className="wrap-input100 validate-input" data-validate="Name is required">
+                            <span className="label-input100">Password : </span>
+                            <input className="input100" type="password" required={true}
+                                   value={this.state.newPassword1}
+                                   onChange={this.onChange} name="newPassword1"/>
+                            <span className="focus-input100"/>
+                        </div>
+
+                        <div className="wrap-input100 validate-input" data-validate="Name is required">
+                            <span className="label-input100">Confirm Password : </span>
+                            <input className="input100" type="password" required={true}
+                                   value={this.state.newPassword2}
+                                   onChange={this.onChange} name="newPassword2"/>
+                            <span className="focus-input100"/>
+                        </div>
+
+                        <div className="col-lg mt-3">
+                            <input type="submit" className="btn btn-info btn-block" value="Change Password"/>
+                        </div>
+                    </form>
+                </div>
+            </Modal>);
+    }
+
+    renderChangeProfilePicture(e) {
+        return (
+            <Modal visible={this.state.visibleProfileModal} width="1000" height="600" effect="fadeInRight"
+                   onClickAway={() => this.closeModal()}>
+                <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
+                   style={{marginLeft: "980px"}}/>
+                <div className="container p-2" style={{marginLeft: "300px"}}>
+                    <img
+                        src={this.state.url || 'http://vlabs.iitb.ac.in/vlabs-dev/labs_local/machine_learning/labs/exp11/images/no_img.png'}
+                        alt="Uploaded images" height="300"
+                        width="400" className="profilePicture"/><br/>
+                    <input type="file" onChange={this.handleChange} className="btn btn-info"
+                           style={{marginLeft: "30px"}} accept="image/*"/>
+                    <br/><br/>
+                    {this.state.barVisibleFlag ?
+                        <div style={{width: "100px", marginLeft: "150px", marginBottom: "10px"}}><Progress
+                            type="circle" percent={this.state.progress}
+                            status="success" width={100} strokeWidth={10}
+                        /></div> : null}
+
+                    <Ripples>
+                        <Button className="btn btn-info" style={{width: "100px", marginLeft: "150px"}}
+                                onClick={this.handleUpload}>Upload <i className="fa fa-upload"/></Button>
+                    </Ripples>
+                </div>
+            </Modal>
+        )
+    }
+
     render() {
         return (
             <div>
@@ -193,8 +264,9 @@ export default class LecturerProfile extends Component {
                                             width="400" className="profilePicture"/><br/>
                                     </div>
                                     <div className="profileCenteredImageText">
-                                            <Button className="btn btn-info" onClick={() => this.openProfileModal()}><i className="fa fa-camera"/></Button>
-                                     </div>
+                                        <Button className="btn btn-info" onClick={() => this.openProfileModal()}><i
+                                            className="fa fa-camera"/></Button>
+                                    </div>
                                 </Ripples>
                             </div>
 
@@ -288,70 +360,8 @@ export default class LecturerProfile extends Component {
                         </QueueAnim>
                     </form>
                 </div>
-
-                <Modal visible={this.state.visibleModal} width="1000" height="400" effect="fadeInRight"
-                       onClickAway={() => this.closeModal()}>
-                    <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
-                       style={{marginLeft: "980px"}}/>
-                    <div className="container p-2" style={{marginBottom: '500px', paddingBottom: '500px'}}>
-                        <form onSubmit={this.onSubmitPassword}>
-                            <div className="wrap-input100 validate-input" data-validate="Name is required">
-                                <span className="label-input100">Old Password : </span>
-                                <input className="input100" type="password" required={true}
-                                       value={this.state.oldPassword}
-                                       onChange={this.onChange} name="oldPassword"/>
-                                <span className="focus-input100"/>
-                            </div>
-
-                            <div className="wrap-input100 validate-input" data-validate="Name is required">
-                                <span className="label-input100">Password : </span>
-                                <input className="input100" type="password" required={true}
-                                       value={this.state.newPassword1}
-                                       onChange={this.onChange} name="newPassword1"/>
-                                <span className="focus-input100"/>
-                            </div>
-
-                            <div className="wrap-input100 validate-input" data-validate="Name is required">
-                                <span className="label-input100">Confirm Password : </span>
-                                <input className="input100" type="password" required={true}
-                                       value={this.state.newPassword2}
-                                       onChange={this.onChange} name="newPassword2"/>
-                                <span className="focus-input100"/>
-                            </div>
-
-                            <div className="col-lg mt-3">
-                                <input type="submit" className="btn btn-info btn-block" value="Change Password"/>
-                            </div>
-                        </form>
-                    </div>
-                </Modal>
-
-
-                <Modal visible={this.state.visibleProfileModal} width="1000" height="600" effect="fadeInRight"
-                       onClickAway={() => this.closeModal()}>
-                    <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
-                       style={{marginLeft: "980px"}}/>
-                    <div className="container p-2" style={{marginLeft: "300px"}}>
-                        <img
-                            src={this.state.url || 'http://vlabs.iitb.ac.in/vlabs-dev/labs_local/machine_learning/labs/exp11/images/no_img.png'}
-                            alt="Uploaded images" height="300"
-                            width="400" className="profilePicture"/><br/>
-                        <input type="file" onChange={this.handleChange} className="btn btn-info"
-                               style={{marginLeft: "30px"}}/>
-                        <br/><br/>
-                        {this.state.barVisibleFlag ?
-                            <div style={{width: "100px", marginLeft: "150px", marginBottom: "10px"}}><Progress
-                                type="circle" percent={this.state.progress}
-                                status="success" width={100} strokeWidth={10}
-                            /></div> : null}
-
-                        <Ripples>
-                            <Button className="btn btn-info" style={{width: "100px", marginLeft: "150px"}}
-                                    onClick={this.handleUpload}>Upload <i className="fa fa-upload"/></Button>
-                        </Ripples>
-                    </div>
-                </Modal>
-
+                {this.renderChangePasswordModal()}
+                {this.renderChangeProfilePicture()}
                 <Footer/>
             </div>
         );

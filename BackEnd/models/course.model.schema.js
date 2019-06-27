@@ -1,7 +1,6 @@
 const mongoose=require('mongoose');
 
 const CourseSchema = new mongoose.Schema({
-    
     CourseName : String,
     InchargLecture : String,
     CourseId : String,

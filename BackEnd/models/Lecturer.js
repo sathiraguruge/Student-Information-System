@@ -17,7 +17,8 @@ const LecturerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Faculty: String
+    Faculty: String,
+    ImageURL : String
 });
 const Lecturer = mongoose.model('Lecturer', LecturerSchema);
 module.exports = Lecturer;

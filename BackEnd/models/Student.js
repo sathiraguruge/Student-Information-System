@@ -14,8 +14,7 @@ const StudentSchema = new mongoose.Schema({
     Courses : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
-    }],
-    ImageURL : String
+    }]
 });
 
 

@@ -13,7 +13,6 @@ export default class ManageCourse extends Component {
                 <div key="1">
                     <CourseList/>
                 </div>
-
                 <PageFooter/>
             </QueueAnim>
         </div>)

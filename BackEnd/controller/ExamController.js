@@ -1,5 +1,4 @@
 const ExamModel = require('../models/exam');
-// const md5 = require('md5');
 const MailService = require('../services/MailService');
 const CosEnrollModel = require('../models/CosEnroll');
 
@@ -100,11 +99,11 @@ const ExamController = function () {
         return new Promise((resolve, reject) => {
             CosEnrollModel.find({CourseId: CourseId}).then((enrollment) => {
                 for (i = 0; i < enrollment.length; ++i) {
-                        MailService.sendMail(enrollment[i].Email, "Dummy", "Examination Update", "New Examination", data).then( data => {
-                            resolve({status: 200, message: 'Exam Notification Successfully !'});
-                        }).catch( err => {
-                            reject({status: 500, err});
-                        });
+                    MailService.sendMail(enrollment[i].Email, "Dummy", "Examination Update", "New Examination", data).then(data => {
+                        resolve({status: 200, message: 'Exam Notification Successfully !'});
+                    }).catch(err => {
+                        reject({status: 500, err});
+                    });
                 }
 
             }).catch(err => {

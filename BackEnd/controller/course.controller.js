@@ -45,7 +45,7 @@ const CourseController = function () {
                 reject({status: 500, err});
             })
         })
-    }
+    };
 
     this.getCourrseById = (CourseID) => {
         return new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ const CourseController = function () {
                 reject({status: 500, message: err});
             })
         })
-    }
+    };
 
     this.getAll = () => {
         return new Promise((resolve, reject) => {
@@ -80,7 +80,7 @@ const CourseController = function () {
                 reject({status: 500, err});
             })
         })
-    }
+    };
 
     this.updateCourseForNoticfication = (CourseID, data) => {
         return new Promise((resolve, reject) => {
@@ -89,7 +89,7 @@ const CourseController = function () {
                     resolve({status: 404, message: 'Course not found'});
                 else {
                     console.log(course[0]);
-                    console.log(data)
+                    console.log(data);
                     var courseFinal = {
                         CourseName: course[0].CourseName,
                         InchargLecture: course[0].InchargLecture,
@@ -101,8 +101,7 @@ const CourseController = function () {
                         Department: course[0].Department,
                         CourseAddedDate: course[0].CourseAddedDate,
                         AcceptByLectureFlag: data.AcceptByLectureFlag
-                    }
-                    // course.AcceptByLectureFlag : 1;
+                    };
                     courseModel.findOneAndUpdate(({CourseId: CourseID}), courseFinal).then(course1 => {
                         if (course1 === null)
                             resolve({status: 404, message: 'Course not found'});
@@ -117,8 +116,7 @@ const CourseController = function () {
                 reject({status: 500, err});
             })
         });
-    }
-
+    };
 
     this.getAccepted = () => {
         return new Promise((resolve, reject) => {
@@ -129,6 +127,6 @@ const CourseController = function () {
             })
         })
     };
-}
+};
 
 module.exports = new CourseController();

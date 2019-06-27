@@ -1,28 +1,25 @@
 import SISService from "../../services/SISService";
 
 export default class CourseAddValidation {
-    constructor(CourseName,CourseId,InchargLecture,Department){
+    constructor(CourseName, CourseId, InchargLecture, Department) {
         this.CourseName = CourseName;
         this.InchargLecture = InchargLecture;
         this.CourseId = CourseId;
-        this.EnrollKey='';
-        this.NumberOfEnrolledStudent='';
-        this.Year='';
-        this.Semester='';
-        this.Faculty='';
-        this.Department=Department;
-        this.CourseAddedDate='';
-        this.AcceptByLectureFlag='';
+        this.EnrollKey = '';
+        this.NumberOfEnrolledStudent = '';
+        this.Year = '';
+        this.Semester = '';
+        this.Faculty = '';
+        this.Department = Department;
+        this.CourseAddedDate = '';
+        this.AcceptByLectureFlag = '';
         this.SISService = new SISService();
     }
 
     get validate() {
-        if(this.isCourseName)
-            if(this.isCourseId)
-                if(this.isLecture)
-                    return true;
-                else
-                    return false;
+        if (this.isCourseName)
+            if (this.isCourseId)
+                return !!this.isLecture;
             else
                 return false;
         else
@@ -30,19 +27,19 @@ export default class CourseAddValidation {
 
     }
 
-    get isCourseName(){
-        var exp = /^[a-zA-Z]+$/;
-        if (!(this.CourseName.toString().match(exp))){
-            alert('Course Name contains number(s)')
+    get isCourseName() {
+        const exp = /^[a-zA-Z]+$/;
+        if (!(this.CourseName.toString().match(exp))) {
+            alert('Course Name contains number(s)');
             return false
-        }else if (!(this.Department.toString().match(exp))){
-            alert('Department Name contains number(s)')
+        } else if (!(this.Department.toString().match(exp))) {
+            alert('Department Name contains number(s)');
             return false
-        }
-        else
+        } else
             return true;
     }
-    get isCourseId(){
+
+    get isCourseId() {
         if (this.CourseId == null) {
             alert('Course ID cannot be null');
             return false;
@@ -51,8 +48,8 @@ export default class CourseAddValidation {
         }
     }
 
-    get isLecture(){
-        this.SISService.getMemberProfile(this.InchargLecture).then(Lecturer=>{
+    get isLecture() {
+        this.SISService.getMemberProfile(this.InchargLecture).then(Lecturer => {
             if (Lecturer == null) {
                 alert('There No Lecture in this ID');
                 return false;

@@ -4,7 +4,7 @@ import Login from './components/login/login'
 import RegisterStudent from './components/register/registerStudent'
 import UserService from './services/UserService'
 import LecturerHome from './components/lecturer/lecturerDashboard'
-import LecturerProfile from './components/lecturer/profile'
+import LecturerProfile from './components/lecturer/lecturerProfile'
 import AddExam from "./components/lecturer/addExamItems";
 import ManageExamItems from "./components/lecturer/manageExamItems";
 

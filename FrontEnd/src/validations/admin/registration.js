@@ -7,17 +7,14 @@ export default class AdminRegistrationValidation {
 
     get validate() {
         if (this.isUsername)
-            if (this.isPassword)
-                return true;
-            else
-                return false;
+            return this.isPassword;
         else
             return false;
     }
 
     get isUsername() {
-        var exp = /[0-9]/;
-        var exp2 = /[a-zA-Z]/;
+        const exp = /[0-9]/;
+        const exp2 = /[a-zA-Z]/;
         if (this.Username.match(exp) != null && this.Username.match(exp2) != null) {
             return true;
         } else {
@@ -29,14 +26,14 @@ export default class AdminRegistrationValidation {
     get isPassword() {
         if (!(this.Password1.localeCompare(this.Password2))) {
             if (this.Password1.length >= 8) {
-                var exp1 = /[0-9]/;
-                var exp2 = /[a-z]/;
-                var exp3 = /[A-Z]/;
-                var exp4 = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+                const exp1 = /[0-9]/;
+                const exp2 = /[a-z]/;
+                const exp3 = /[A-Z]/;
+                const exp4 = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
                 if ((this.Password1.match(exp1) != null) && (this.Password1.match(exp2) != null) && (this.Password1.match(exp3) != null) && (this.Password1.match(exp4) != null)) {
                     return true;
                 } else {
-                    alert('Enter a Combination of Uppercases, Lowercases, Digits, and Special Characters');
+                    alert('Enter a Combination of Uppercase, Lowercase, Digits, and Special Characters');
                     return false;
                 }
             } else {

@@ -5,7 +5,6 @@ import PageFooter from '../layouts/footer'
 import QueueAnim from "rc-queue-anim";
 
 export default class ManageCourse extends Component {
-
     render() {
         return (<div>
             <QueueAnim duration="3000" interval="400">
@@ -13,7 +12,6 @@ export default class ManageCourse extends Component {
                 <div key="1">
                     <CourseList/>
                 </div>
-
                 <PageFooter/>
             </QueueAnim>
         </div>)

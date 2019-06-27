@@ -11,10 +11,7 @@ export default class LecturerRegistrationValidation {
     get validate() {
         if(this.isName)
             if(this.isMobile)
-                if(this.isStaffID)
-                    return true;
-                else
-                    return false;
+                return this.isStaffID;
             else
                 return false;
          else
@@ -23,12 +20,12 @@ export default class LecturerRegistrationValidation {
     }
 
     get isName(){
-        var exp = /^[a-zA-Z]+$/;
+        const exp = /^[a-zA-Z]+$/;
         if (!(this.FirstName.toString().match(exp))){
-            alert('First Name contains number(s)')
+            alert('First Name contains number(s)');
             return false
         }else if (!(this.LastName.toString().match(exp))){
-            alert('Last Name contains number(s)')
+            alert('Last Name contains number(s)');
             return false
         }
         else
@@ -36,7 +33,7 @@ export default class LecturerRegistrationValidation {
     }
 
     get isMobile(){
-        var exp = /[0-9]/;
+        const exp = /[0-9]/;
         if(!(this.MobileNo.toString().match(exp))){
             alert('Mobile Number contains letters');
             return false;

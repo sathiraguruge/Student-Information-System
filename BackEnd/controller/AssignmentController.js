@@ -84,8 +84,8 @@ const AssignmentController = function () {
             })
         })
     };
-	
-	this.getByUser = (CreatedBy) => {
+
+    this.getByUser = (CreatedBy) => {
         return new Promise((resolve, reject) => {
             AssignmentModel.find({CreatedBy: CreatedBy}).then((exam) => {
                 if (exam === null)
@@ -102,9 +102,9 @@ const AssignmentController = function () {
         return new Promise((resolve, reject) => {
             CosEnrollModel.find({CourseId: CourseId}).then((enrollment) => {
                 for (i = 0; i < enrollment.length; ++i) {
-                    MailService.sendMail(enrollment[i].Email, "Dummy", "Examination Update", "New Assignment", data).then( data => {
+                    MailService.sendMail(enrollment[i].Email, "Dummy", "Examination Update", "New Assignment", data).then(data => {
                         resolve({status: 200, message: 'Exam Notification Successfully !'});
-                    }).catch( err => {
+                    }).catch(err => {
                         reject({status: 500, err});
                     });
                 }

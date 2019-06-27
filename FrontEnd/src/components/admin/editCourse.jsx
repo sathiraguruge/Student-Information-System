@@ -29,7 +29,6 @@ export default class EditCourse extends Component {
     }
 
     oldDataLoad() {
-        console.log(this.props.match.params.id);
         this.courseService.getOneCourse(this.props.match.params.id).then(response =>{
             console.log(response.data.data.Faculty);
             this.setState({
