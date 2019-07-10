@@ -14,7 +14,7 @@
     "react-ripples": "^2.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "react-slideshow-image": "^1.1.8",
+    "react-slideshow-image": "^1.2.0",
     "react-sweet-progress": "^1.1.2"
   },
   "scripts": {
