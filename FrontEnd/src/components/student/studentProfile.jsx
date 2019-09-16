@@ -184,7 +184,7 @@ export default class LecturerProfile extends Component {
             <Modal visible={this.state.visibleModal} width="1000" height="400" effect="fadeInRight"
                    onClickAway={() => this.closeModal()}>
                 <i className="fa fa-times" onClick={() => this.closeModal()} aria-hidden="true"
-                   style={{marginLeft: "980px"}}/>
+                   style={{marginLeft: "980px", marginTop : "100px"}}/>
                 <div className="container p-2" style={{marginBottom: '500px', paddingBottom: '500px'}}>
                     <form onSubmit={this.onSubmitPassword}>
                         <div className="wrap-input100 validate-input" data-validate="Name is required">
